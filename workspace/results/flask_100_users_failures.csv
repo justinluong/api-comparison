@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences
+POST,Fraud,HTTPError('403 Client Error: Forbidden for url: Fraud'),47228
