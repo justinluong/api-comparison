@@ -1,6 +1,3 @@
-import logging
-from typing import Optional, Protocol
-
 from fastapi import FastAPI
 
 import comparison.constants as c
@@ -24,11 +21,10 @@ app = FastAPI()
 fraud_classifier: FraudClassifier = LGBMFraudClassifier(
     c.DATA_DIR / "trained_lgbm_model.txt"
 )
-logger.info(f"{fraud_classifier=}")
+logger.info(f"Succesfully loaded fraud classifier.")
 
 sentiment_classifier: SentimentClassifier = TorchSentimentClassifier()
-logger.info(f"{sentiment_classifier=}")
-# sentiment_classifier_gpu
+logger.info(f"Succesfully loaded sentiment classifier.")
 
 
 @app.post("/fraud")
