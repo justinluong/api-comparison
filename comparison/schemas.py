@@ -21,6 +21,7 @@ class FraudPrediction(BaseModel):
 
 class Sentiment(str, Enum):
     positive = "positive"
+    neutral = "neutral"
     negative = "negative"
 
 class SentimentResponse(BaseModel):

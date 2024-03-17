@@ -1,10 +1,9 @@
 from transformers import pipeline
-import comparison.constants as c
+
 from comparison.schemas import Sentiment
 from comparison.utils import get_logger
 
 logger = get_logger()
-
 
 class TorchSentimentClassifier:
     def __init__(
@@ -16,3 +15,9 @@ class TorchSentimentClassifier:
     def get_sentiment(self, text: str) -> tuple[float, Sentiment]:
         result = self._pipeline(text)
         return result[0]["score"], Sentiment(result[0]["label"])
+
+message_bank: dict[Sentiment, str] = {
+    Sentiment.positive: "Thanks for the positive review! We appreciate you shopping with us.",
+    Sentiment.neutral: "We appreciate your feedback.",
+    Sentiment.negative: "We're sorry you didn't have a great experience, we will take on board your feedback.",
+}
