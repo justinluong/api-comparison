@@ -13,6 +13,11 @@ def dummy_fraud_data() -> list[Transaction]:
 
 transactions = dummy_fraud_data()
 
+reviews: list[str] = [
+    "I love this product!",
+    "I hate this product!",
+]
+
 def transaction_to_dict(transaction: Transaction) -> dict:
     return {
         "transaction_amount": transaction.transaction_amount,
@@ -26,15 +31,24 @@ def transaction_to_dict(transaction: Transaction) -> dict:
     }
 
 
-class ShopperUser(HttpUser):
+class User(HttpUser):
     wait_time = constant(0)
 
     @task
-    def sim_prod_default_fallback(self) -> None:
+    def fraud(self) -> None:
         transaction = random.choice(transactions)
         request_payload = transaction_to_dict(transaction)
         self.client.post(
             "/fraud",
             json=request_payload,
             name="Fraud",
+        )
+
+    @task
+    def sentiment(self) -> None:
+        review = random.choice(reviews)
+        self.client.post(
+            "/sentiment",
+            json={"review": review},
+            name="Sentiment",
         )
