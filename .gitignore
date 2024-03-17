@@ -1,7 +1,5 @@
 ### Repo Specific ###
 
-/data/*
-!/data/.gitkeep
 
 /logs/*
 
