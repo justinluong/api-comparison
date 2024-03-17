@@ -9,6 +9,9 @@ typecheck:
 test:
 	poetry run pytest tests -s -v
 
+dev:
+	poetry run uvicorn comparison.main_fastapi:app --port 8000 --reload --log-level debug --timeout-keep-alive 600
+
 fastapi:
 	poetry run uvicorn comparison.main_fastapi:app --workers $(NUM_WORKERS) --port 8000
 

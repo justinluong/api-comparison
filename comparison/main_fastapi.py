@@ -39,7 +39,9 @@ async def predict_fraud(transaction: Transaction) -> FraudPrediction:
 
 @app.post("/sentiment")
 async def review_sentiment(review: str) -> SentimentResponse:
+    logger.info(f"Received review: {review}")
     sentiment_score, sentiment = sentiment_classifier.get_sentiment(review)
+    logger.info(f"Sentiment: {sentiment=}, {sentiment_score=}")
     message_bank: dict[Sentiment, str] = {
         Sentiment.positive: "Thanks for the positive review! We appreciate you shopping with us.",
         Sentiment.negative: "We're sorry you didn't have a great experience, we will take on board your feedback.",

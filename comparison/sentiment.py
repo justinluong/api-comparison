@@ -18,17 +18,22 @@ logger = get_logger()
 class TorchSentimentClassifier:
     def __init__(
         self,
-        model_path: Path = c.DATA_DIR / "pytorch_model.bin",
-        model_name: str = "cardiffnlp/twitter-roberta-base-sentiment-latest",
+        model_name: str = "roberta-base",
     ) -> None:
-        self.pipeline = pipeline(
-            "sentiment-analysis", model=model_name, tokenizer=model_name, device="mps"
+        self._config = RobertaConfig.from_pretrained(model_name)
+        self._tokenizer = RobertaTokenizer.from_pretrained(model_name)
+        self._model = RobertaForSequenceClassification(
+            config=self._config,
         )
-        logger.info(f"{self.pipeline=}")
+        logger.info(f"{self._model=}")
 
     def get_sentiment(self, text: str) -> tuple[float, Sentiment]:
-        result = self.pipeline(text)[0]
-        score = result["score"]
-        label = result["label"]
+        logger.info(f"Received review: {text}")
+        tokenized_text = self._tokenizer(text, return_tensors="pt")
+        logger.info(f"{tokenized_text=}")
+        result = self._model(**tokenized_text)
+        logger.info(f"{result=}")
+        score = 0.8
+        label = "negative"
         sentiment = Sentiment[label]
         return score, sentiment
