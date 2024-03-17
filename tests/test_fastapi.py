@@ -4,7 +4,8 @@ from httpx import AsyncClient
 
 import comparison.constants as c
 from comparison.main_fastapi import app
-from comparison.schemas import Transaction
+from comparison.sentiment import message_bank
+from comparison.schemas import Transaction, Sentiment
 
 @pytest.fixture(scope="session")
 def anyio_backend() -> str:
@@ -45,16 +46,18 @@ async def test_fraud(client: AsyncClient, dummy_fraud_data: list[Transaction]) -
 
 @pytest.mark.anyio
 async def test_sentiment(client: AsyncClient) -> None:
-    response = await client.post(
-        "/sentiment",
-        json={
-            "text": "I love this product, it's amazing!",
-        },
-    )
-    assert response.status_code == 200
-    sentiment_score = response.json()["sentiment_score"]
-    sentiment = response.json()["sentiment"]
-    message = response.json()["message"]
-    assert 0 <= sentiment_score <= 1
-    assert sentiment in ["positive", "negative"]
-    assert type(message) == str
+    test_cases: dict[str, Sentiment] = {
+        "I love this product!": Sentiment.positive,
+        "This product is okay.": Sentiment.neutral,
+        "I hate this product!": Sentiment.negative,
+    }
+
+    for review, expected_sentiment in test_cases.items():
+        response = await client.post("/sentiment", json={"review": review})
+        assert response.status_code == 200
+        sentiment_score = response.json()["sentiment_score"]
+        sentiment = response.json()["sentiment"]
+        message = response.json()["message"]
+        assert type(sentiment_score) == float
+        assert sentiment == expected_sentiment.value
+        assert message == message_bank[expected_sentiment]
