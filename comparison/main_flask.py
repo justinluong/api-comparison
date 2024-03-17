@@ -6,6 +6,7 @@ from comparison.fraud import LGBMFraudClassifier
 from comparison.sentiment import TorchSentimentClassifier, message_bank
 from comparison.schemas import (
     Transaction,
+    Review,
 )
 from comparison.utils import setup_logging
 
@@ -38,8 +39,8 @@ def review_sentiment() -> Response:
     logger.info("Received request:", request.json)
     if not isinstance(request.json, dict):
         raise ValueError("Invalid JSON data")
-    review = request.json["review"]
-    sentiment_score, sentiment = sentiment_classifier.get_sentiment(review)
+    review = Review(**request.json)
+    sentiment_score, sentiment = sentiment_classifier.get_sentiment(review.review)
     logger.info(f"Sentiment: {sentiment=}, {sentiment_score=}")
     return jsonify(
         {

@@ -53,7 +53,7 @@ async def test_sentiment(client: AsyncClient) -> None:
     }
 
     for review, expected_sentiment in test_cases.items():
-        response = await client.post("/sentiment", query_params={"review": review})
+        response = await client.post("/sentiment", json={"review": review})
         assert response.status_code == 200
         sentiment_score = response.json()["sentiment_score"]
         sentiment = response.json()["sentiment"]

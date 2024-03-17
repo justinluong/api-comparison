@@ -15,6 +15,9 @@ class Transaction(BaseModel):
     min_basket_item_price: Optional[float] = None
     max_basket_item_price: Optional[float] = None
 
+class Review(BaseModel):
+    review: str
+
 class FraudPrediction(BaseModel):
     is_fraud: bool
     probability: Optional[float]
