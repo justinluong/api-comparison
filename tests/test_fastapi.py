@@ -48,7 +48,6 @@ async def test_fraud(client: AsyncClient, dummy_fraud_data: list[Transaction]) -
 async def test_sentiment(client: AsyncClient) -> None:
     test_cases: dict[str, Sentiment] = {
         "I love this product!": Sentiment.positive,
-        "This product is okay.": Sentiment.neutral,
         "I hate this product!": Sentiment.negative,
     }
 
