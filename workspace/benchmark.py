@@ -47,7 +47,7 @@ def start_flask(num_workers: int, flask_address: str) -> None:
         "--bind",
         flask_address,
     ]
-    subprocess.run(command)
+    subprocess.Popen(command)
 
 def start_fastapi(num_workers: int, fastapi_port: int) -> None:
     command = [
@@ -60,7 +60,7 @@ def start_fastapi(num_workers: int, fastapi_port: int) -> None:
         "--port",
         str(fastapi_port),
     ]
-    subprocess.run(command)
+    subprocess.Popen(command)
 
 def kill_server(port: int) -> None:
     try:
