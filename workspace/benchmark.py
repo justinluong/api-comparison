@@ -85,6 +85,10 @@ if __name__ == "__main__":
     duration = 60
     user_counts = [10, 100, 1_000, 5_000, 10_000]
 
+    logger.info("Ensure that no other processes are running on ports 5000 and 8000")
+    kill_server(flask_port)
+    kill_server(fastapi_port)
+
     logger.info(f"Starting Flask server on {flask_address} with {num_workers} workers")
     start_flask(num_workers, flask_address)
     for users in user_counts:
