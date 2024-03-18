@@ -23,7 +23,6 @@ logger.info(f"Succesfully loaded sentiment classifier.")
 
 @app.route("/fraud", methods=["POST"])
 def predict_fraud() -> Response:
-    logger.info("Received request:", request.json)
     if not isinstance(request.json, dict):
         raise ValueError("Invalid JSON data")
     transaction = Transaction(**request.json)
@@ -33,12 +32,10 @@ def predict_fraud() -> Response:
 
 @app.route("/sentiment", methods=["POST"])
 def review_sentiment() -> Response:
-    logger.info("Received request:", request.json)
     if not isinstance(request.json, dict):
         raise ValueError("Invalid JSON data")
     review = Review(**request.json)
     sentiment_score, sentiment = sentiment_classifier.get_sentiment(review.review)
-    logger.info(f"Sentiment: {sentiment=}, {sentiment_score=}")
     return jsonify(
         {
             "sentiment_score": sentiment_score,

@@ -34,9 +34,7 @@ async def predict_fraud(transaction: Transaction) -> FraudPrediction:
 
 @app.post("/sentiment")
 async def review_sentiment(review: Review) -> SentimentResponse:
-    logger.info(f"Received review: {review.review}")
     sentiment_score, sentiment = sentiment_classifier.get_sentiment(review.review)
-    logger.info(f"Sentiment: {sentiment=}, {sentiment_score=}")
     return SentimentResponse(
         sentiment_score=sentiment_score,
         sentiment=sentiment,
