@@ -82,7 +82,7 @@ def kill_server(port: int) -> None:
 if __name__ == "__main__":
     setup_logging()
 
-    locust_file = c.ROOT_DIR / "locustfile.py"
+    locust_file = str(c.ROOT_DIR / "locustfile.py")
     results_dir = c.ROOT_DIR / "results"
     results_dir.mkdir(exist_ok=True)
 
