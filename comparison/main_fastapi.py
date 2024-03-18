@@ -16,13 +16,13 @@ from comparison.logging import setup_logging, get_logger
 setup_logging()
 logger = get_logger()
 
+logger.info("Starting FastAPI app.")
 app = FastAPI()
 
 fraud_classifier: FraudClassifier = LGBMFraudClassifier(
     c.DATA_DIR / "trained_lgbm_model.txt"
 )
 logger.info(f"Succesfully loaded fraud classifier.")
-
 sentiment_classifier: SentimentClassifier = TorchSentimentClassifier()
 logger.info(f"Succesfully loaded sentiment classifier.")
 

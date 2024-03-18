@@ -22,7 +22,7 @@ def swarm_server(
         "--locustfile",
         locust_file,
         "--host",
-        address,
+        f"http:://{address}",
         "--users",
         str(users),
         "--spawn-rate",
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     setup_logging()
 
     locust_file = c.ROOT_DIR / "locustfile.py"
-    host = "http://127.0.0.1"
+    host = "127.0.0.1"
     flask_port = 5000
     fastapi_port = 8000
     flask_address= f"{host}:{flask_port}"

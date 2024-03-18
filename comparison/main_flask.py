@@ -1,4 +1,3 @@
-import logging
 from flask import Flask, request, jsonify, Response
 
 import comparison.constants as c
@@ -13,15 +12,13 @@ from comparison.logging import setup_logging, get_logger
 setup_logging()
 logger = get_logger()
 
+logger.info("Starting Flask app.")
 app = Flask(__name__)
 
-logger.info("App set up")
-
 fraud_classifier = LGBMFraudClassifier(c.DATA_DIR / "trained_lgbm_model.txt")
-logger.info(f"{fraud_classifier=}")
-
+logger.info(f"Succesfully loaded fraud classifier.")
 sentiment_classifier = TorchSentimentClassifier()
-logger.info(f"{sentiment_classifier=}")
+logger.info(f"Succesfully loaded sentiment classifier.")
 
 
 @app.route("/fraud", methods=["POST"])
