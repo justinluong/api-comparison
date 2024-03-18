@@ -46,4 +46,4 @@ def setup_logging(log_file: Path = c.LOGS_DIR / "api-comparison.log") -> None:
 
 
 def get_logger() -> logging.Logger:
-    return logging.getLogger("justin-utils")
+    return logging.getLogger("api-comparison")

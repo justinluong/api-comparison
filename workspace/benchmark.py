@@ -93,7 +93,7 @@ if __name__ == "__main__":
     fastapi_address= f"{host}:{fastapi_port}"
     num_workers = 3
     duration = 60
-    user_counts = [10, 100, 1_000, 5_000, 10_000]
+    user_counts = [10, 100, 1_000, 5_000]
 
     logger.info("Ensure that no other processes are running on ports 5000 and 8000")
     kill_server(flask_port)
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         logger.info(f"Starting Locust with {users} users for Flask")
         save_results_to = str(results_dir / f"flask_results_{users}")
         logger.info(f"Saving results to {save_results_to}")
-        spawn_rate = users // 5
+        spawn_rate = min(users // 5, 100) # Limit spawn rate to 100, recommended by Locust
         swarm_server(
             address=flask_address,
             users=users,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         logger.info(f"Starting Locust with {users} users for FastAPI")
         save_results_to = str(results_dir / f"fastapi_results_{users}")
         logger.info(f"Saving results to {save_results_to}")
-        spawn_rate = users // 5
+        spawn_rate = min(users // 5, 100) # Limit spawn rate to 100, recommended by Locust
         swarm_server(
             address=fastapi_address,
             users=users,
