@@ -22,7 +22,7 @@ def swarm_server(
         "--locustfile",
         locust_file,
         "--host",
-        f"http:://{address}",
+        f"http://{address}",
         "--users",
         str(users),
         "--spawn-rate",
