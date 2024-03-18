@@ -11,7 +11,7 @@ from comparison.schemas import (
     FraudClassifier,
     SentimentClassifier,
 )
-from comparison.utils import setup_logging, get_logger
+from comparison.logging import setup_logging, get_logger
 
 setup_logging()
 logger = get_logger()

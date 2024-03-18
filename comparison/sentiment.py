@@ -1,7 +1,7 @@
 from transformers import pipeline
 
 from comparison.schemas import Sentiment
-from comparison.utils import get_logger
+from comparison.logging import get_logger
 
 logger = get_logger()
 

@@ -8,10 +8,10 @@ from comparison.schemas import (
     Transaction,
     Review,
 )
-from comparison.utils import setup_logging
+from comparison.logging import setup_logging, get_logger
 
 setup_logging()
-logger = logging.getLogger("api-comparison")
+logger = get_logger()
 
 app = Flask(__name__)
 
