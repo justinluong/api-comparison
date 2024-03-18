@@ -83,6 +83,9 @@ if __name__ == "__main__":
     setup_logging()
 
     locust_file = c.ROOT_DIR / "locustfile.py"
+    results_dir = c.ROOT_DIR / "results"
+    results_dir.mkdir(exist_ok=True)
+
     host = "127.0.0.1"
     flask_port = 5000
     fastapi_port = 8000
@@ -100,7 +103,7 @@ if __name__ == "__main__":
     start_flask(num_workers, flask_address)
     for users in user_counts:
         logger.info(f"Starting Locust with {users} users for Flask")
-        save_results_to = str(c.ROOT_DIR / f"flask_results_{users}")
+        save_results_to = str(results_dir / f"flask_results_{users}")
         logger.info(f"Saving results to {save_results_to}")
         spawn_rate = users // 5
         swarm_server(
@@ -119,7 +122,7 @@ if __name__ == "__main__":
     start_fastapi(num_workers, fastapi_port)
     for users in user_counts:
         logger.info(f"Starting Locust with {users} users for FastAPI")
-        save_results_to = str(c.ROOT_DIR / f"fastapi_results_{users}")
+        save_results_to = str(results_dir / f"fastapi_results_{users}")
         logger.info(f"Saving results to {save_results_to}")
         spawn_rate = users // 5
         swarm_server(
