@@ -33,6 +33,7 @@ def swarm_server(
         save_results_to,
         "--headless",
     ]
+    logger.info(" ".join(command))
     subprocess.run(command)
 
 
@@ -47,7 +48,10 @@ def start_flask(num_workers: int, flask_address: str) -> None:
         "--bind",
         flask_address,
     ]
+    logger.info(" ".join(command))
     subprocess.Popen(command)
+    logger.info("Wait 15 seconds for the server to start")
+    time.sleep(15)
 
 def start_fastapi(num_workers: int, fastapi_port: int) -> None:
     command = [
@@ -60,7 +64,10 @@ def start_fastapi(num_workers: int, fastapi_port: int) -> None:
         "--port",
         str(fastapi_port),
     ]
+    logger.info(" ".join(command))
     subprocess.Popen(command)
+    logger.info("Wait 15 seconds for the server to start")
+    time.sleep(15)
 
 def kill_server(port: int) -> None:
     try:
@@ -97,7 +104,7 @@ if __name__ == "__main__":
         logger.info(f"Saving results to {save_results_to}")
         spawn_rate = users // 5
         swarm_server(
-            host=flask_address,
+            address=flask_address,
             users=users,
             spawn_rate=spawn_rate,
             duration=duration,
@@ -116,7 +123,7 @@ if __name__ == "__main__":
         logger.info(f"Saving results to {save_results_to}")
         spawn_rate = users // 5
         swarm_server(
-            host=fastapi_address,
+            address=fastapi_address,
             users=users,
             spawn_rate=spawn_rate,
             duration=duration,
